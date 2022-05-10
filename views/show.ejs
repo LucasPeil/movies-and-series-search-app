@@ -16,7 +16,7 @@
             <small>Ainda não há críticas!</small>
         
             
-                
+            <%if(currentUser){%>  
             <form action="/movies/<%=movie.data.id%>/review" method="POST">
                 <div class="my-3">
                     <p> Gostou do filme? <br> </p>
@@ -43,6 +43,7 @@
                 <button class="btn btn-success mt-2">Enviar!!!</button>
             </form>
             </form>
+            <%}%> 
                  
                                           
             </div>
@@ -58,7 +59,7 @@
     
     
     </script>
-     
+      <script src="../../javascript/buttonVisibility.js"></script>
     
     
     

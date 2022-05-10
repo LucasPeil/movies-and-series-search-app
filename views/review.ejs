@@ -26,7 +26,8 @@
         <% }else{ %>
             <small>No users reviews yet</small>
         <%} %>
-            
+
+        <%if(currentUser){%>  
         <form action="/movies/<%=foundMovie.movieApiId%>/review" method="POST">
                    
               <!-- <div class="mt-2">
@@ -56,6 +57,8 @@
             </div>
             <button class="btn btn-success mt-2">Enviar!!!</button>
         </form>
+
+        <%}%> 
              
                                       
         </div>
