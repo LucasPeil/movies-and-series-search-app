@@ -1,9 +1,9 @@
 <% layout("./layouts/boilerplate") -%>
-    
+
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-3 ">
-            <h1>Pesquise seu filme ou serie</h1>
+        <div class=" col-sm-12 col-md-6 offset-md-3 d-flex flex-column" style=" ">
+            <h1>Pesquise um filme ou serie</h1>
             <form id ="movieForm">
                 <div class="mb-3">
                     <label class="form-label" for="show">Qual filme/série voce procura?</label>
@@ -11,8 +11,21 @@
                 </div>
                 <button class="btn btn-success">Pesquisar</button>
             </form>
+           <!--Adicionar breakpoints aqui alterando a max-width depentedendo do tamanho da tela--> 
+        <div class="relative-container align-self-center" style="max-width: 320px; ">
+                   
+            <div id ="moviesBox" class=" d-inline-block position-relative mt-5" ></div>
 
-            <div id ="moviesBox" class="mt-5" ></div>
+            <ul class="control invisible" id="customControl">
+                <li class="prev">
+                    <i class="fa-solid fa-angle-left"></i>
+                </li>
+                <li class="next">
+                    <i class="fa-solid fa-angle-right"></i>
+                </li>
+
+            </ul>
+        </div>
             <div id ="loading" class="mt-5" ></div>
 
 
@@ -27,6 +40,14 @@
     </div>
 </div>
 
-
     
-    <script src="../../javascript/movieFinder.js"></script>
+    
+    
+    <script  type="module" src="../../javascript/movieFinder.js"></script>
+   
+    
+    
+        
+        
+      </script>
+    

@@ -2,68 +2,53 @@
     
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
-            <div>
-                <img src="<%=foundMovie.imageUrl%>">
-            </div>
-                        
-        </div>
-        <div class="col-md-3">
-        <form action="/movies/<%=foundMovie.movieApiId%>/add" method="POST">
-            <button class="btn btn-success mt-3">Save</button>
-        </form>
-        
-        <% let usersRating = 0 %>
-        <%if(foundMovie.review.length !=0){%>
-            <%for(let review of foundMovie.review){%>
-                <%usersRating +=review.rating%>
-            <% } %>
+           
+
+          <div class="card mb-3  ">
+              <div class="row g-0">
+                  <div class="col-sm-12 col-md-3 my-2"   >
+                    <img   src="<%=foundMovie.imageUrl%>" >
+                  </div>
+                  <div class="col-sm-8 col-md-9">
+                      <div class="card-body " >
+                           <div class="row">
+                                <div class="col-md-8">
+                                    <h3 class="card-title "><%=foundMovie.movieName%></h3>
+                                </div>
+                                <div class="col-md-4">
+                                    <form action="/movies/<%=foundMovie.movieApiId%>/add" method="POST">
+                                        <button class="btn btn-success  w-100 ">Adicione a sua lista!</button>
+                                    </form>
+                                </div>
+                           </div>
+                           <%if(!currentUser){%>
+                            <p class="mt-2"><a href="/login"> Faça seu login</a> ou <a href="/register">Registre-se</a> para deixar uma crítica!</p>
+                          <%}%>  
+                          <% let usersRating = 0 %>
+                        <%if(foundMovie.review.length !=0){%>
+                                <%for(let review of foundMovie.review){%>
+                                <%usersRating +=review.rating%>
+                          <% } %>
             
-            <p class="starability-result mt-2" data-rating=<%= Math.round(usersRating/foundMovie.review.length) %>>
-                Avarege users rate: <%= Math.round(usersRating/foundMovie.review.length) %> stars
-            </p>
+                            <p class="starability-result mt-2" data-rating=<%= Math.round(usersRating/foundMovie.review.length) %>>
+                                Avarege users rate: <%= Math.round(usersRating/foundMovie.review.length) %> stars
+                            </p>
             
-        <% }else{ %>
-            <small>No users reviews yet</small>
-        <%} %>
+                        <% }else{ %>
+                        <small>No users reviews yet</small>
+                        <%} %>
+                                                   
+                          
+                            
+                            <p class="card-text"><%-foundMovie.summary%></p>
+                            
+                      </div>
+                  </div>
+              </div>
+          </div>
 
-        <%if(currentUser){%>  
-        <form action="/movies/<%=foundMovie.movieApiId%>/review" method="POST">
-                   
-              <!-- <div class="mt-2">
-                  <p><small>Average rating: <foundMovie.rating%></small></p>
-              </div> -->
-            <div class="my-3">
-                <p> Gostou do filme? <br> </p>
-                <button name="reviewButton" id="reviewButton">Deixe seu Review!</button> 
-                <div class="invisible mt-3" id="reviewBox">
-                    <fieldset class="starability-slot">
-                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked
-                            aria-label="No rating." />
-                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                        <label for="first-rate1" title="Terrible">1 star</label>
-                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                        <label for="first-rate2" title="Not good">2 stars</label>
-                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                        <label for="first-rate3" title="Average">3 stars</label>
-                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                        <label for="first-rate4" title="Very good">4 stars</label>
-                        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                        <label for="first-rate5" title="Amazing">5 stars</label>
-                    </fieldset>
-
-                    <textarea class="form-control" name="review[reviewText]" id="reviewText"cols="30" rows="3"></textarea>
-                </div> 
-            </div>
-            <button class="btn btn-success mt-2">Enviar!!!</button>
-        </form>
-
-        <%}%> 
-             
-                                      
-        </div>
-               
-            <%-foundMovie.summary%>
+                             
+            
             
             <%if(foundMovie.review){%>
                 <div class="my-3">
@@ -87,14 +72,9 @@
     </div>
 </div>
 
-<script>
-    
 
-
-</script>
  <script src="../../javascript/buttonVisibility.js"></script>
- <script src="../../javascript/backToUrl.js"></script>
-
+ 
 
 
 

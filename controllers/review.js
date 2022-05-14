@@ -41,15 +41,16 @@ module.exports.createReview = async (req,res)=>{
 
 module.exports.renderEditReview = async(req,res)=>{
     const {reviewId} = req.params
-    const review = await Review.findById(reviewId)
+    const review = await Review.findById(reviewId).populate("author").populate("movie")
     
-    res.render("../views/editReview")
+    res.render("../views/editReview", {review})
   }
 
 module.exports.editReview = async(req,res)=>{
     const {id, reviewId} = req.params;
     const movie = await Movie.findById(id);
-    await Review.findByIdAndUpdate(id,{...req.body.review})
+    await Review.findByIdAndUpdate(reviewId,{...req.body.review})
+    req.flash("success", "Crítica editada!")
     res.redirect(`/movies/${movie.movieApiId}`)
   
   
