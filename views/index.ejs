@@ -2,19 +2,19 @@
 
 <div class="container">
     <div class="row">
-        <div class=" col-sm-12 col-md-6 offset-md-3 d-flex flex-column" style=" ">
+        <div class=" col-sm-12 col-lg-6 offset-lg-3 d-flex flex-column" >
             <h1>Pesquise um filme ou serie</h1>
-            <form id ="movieForm">
+            <form id ="showForm">
                 <div class="mb-3">
                     <label class="form-label" for="show">Qual filme/série voce procura?</label>
-                    <input class="form-control" id="show" type="text" placeholder="Ex: Breaking Bad" name="movies" autofocus>
+                    <input class="form-control" id="show" type="text" placeholder="Ex: Breaking Bad" name="shows" autofocus>
                 </div>
                 <button class="btn btn-success">Pesquisar</button>
             </form>
            <!--Adicionar breakpoints aqui alterando a max-width depentedendo do tamanho da tela--> 
-        <div class="relative-container align-self-center" style="max-width: 320px; ">
+        <div class="relative-container align-self-center">
                    
-            <div id ="moviesBox" class=" d-inline-block position-relative mt-5" ></div>
+            <div id ="showsBox" class=" d-inline-block position-relative " ></div>
 
             <ul class="control invisible" id="customControl">
                 <li class="prev">
@@ -43,7 +43,7 @@
     
     
     
-    <script  type="module" src="../../javascript/movieFinder.js"></script>
+    <script  type="module" src="../../javascript/showFinder.js"></script>
    
     
     

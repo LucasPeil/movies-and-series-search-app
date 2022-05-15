@@ -4,7 +4,7 @@
    
  <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-3">
+        <div class="col-sm-12 col-lg-6 offset-lg-3 d-flex flex-column">
           <h1>Registre-se</h1>
           <form  action="/register" method="POST">
             <div class="mb-3">
@@ -19,11 +19,12 @@
                 <label class="form-label" for="password">Password:</label>
                 <input  class="form-control" type="password" id="password" name="user[password]" placeholder="Enter your password">
             </div >
-            
-            <button class="btn btn-success"> Enviar</button>
+            <div class="col-sm-12 col-lg-6 offset-lg-3">
+                <button class=" btn btn-success w-100">Entrar</button>
+            </div>
            
          </form>
-            <div id ="moviesBox"></div>
+            <div id ="showsBox"></div>
         </div>
     </div>
 </div>

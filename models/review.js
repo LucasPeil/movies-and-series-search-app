@@ -12,9 +12,9 @@ const reviewSchema =  new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
-    movie:{
+    show:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:"Movie"
+        ref:"Show"
     }
 })
 

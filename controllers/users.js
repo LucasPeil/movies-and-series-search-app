@@ -5,7 +5,7 @@ module.exports.renderLogin = (req, res)=>{
 }
 module.exports.login = (req,res)=>{
     //console.log(req.user._id)
-    const goToUrl = req.session.returnTo || "/movies" ;
+    const goToUrl = req.session.returnTo || "/shows" ;
     delete req.session.returnTo;
     res.redirect(goToUrl);
 }
@@ -19,8 +19,8 @@ module.exports.register = async (req,res)=>{
     const registeredUser = await User.register(user,password)
     req.login(registeredUser, err=>{
         if (err) return next(err);
-        req.flash("success", "Bem-indo!")
-        res.redirect("/movies")
+        req.flash("success", "Bem-vindo!")
+        res.redirect("/shows")
     })
     } catch(e){
         req.flash("error", e.message)
@@ -29,7 +29,7 @@ module.exports.register = async (req,res)=>{
 }
 module.exports.logout = (req,res)=>{
     req.logout();
-    req.flash()
+    req.flash("success", "Até logo!")
     
-    res.redirect("/movies")
+    res.redirect("/shows")
 }

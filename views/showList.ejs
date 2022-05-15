@@ -1,0 +1,39 @@
+<% layout("./layouts/boilerplate") -%>
+
+<div class="container">
+    
+    <% let usersRating = 0 %>
+    <%for(let show of user.shows){%>
+<div class="card mb-3" >      
+    <div class="row g-0">
+        <div class="col-sm-12 col-md-6 col-lg-2 my-2 ml-2" >
+            <img src="<%=show.imageUrl%>">
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-10">
+            <div class="card-body">
+                <div class="row">
+                    <div class=" col-md-8 col-lg-10">
+                      <h3 class="card-title"><%=show.showName%></h3>
+                    </div>
+                    <div class=" col-md-4 col-lg-2">
+                        <form action="/shows/<%=show._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger btn-sm w-100"> Remover </button>
+                        </form>
+                    </div>
+                </div>
+                <p class="card-text"><%-show.summary%></p>
+            </div>
+        </div>
+        
+            
+                
+           
+         
+            
+                       
+    </div>
+</div>
+    <%}%>
+</div>
+
+<script src="../../javascript/buttonVisibility.js"></script>

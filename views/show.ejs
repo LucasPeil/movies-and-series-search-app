@@ -2,30 +2,28 @@
     
 
     
-    <div class="card mb-3" style="">
+    <div class="card mb-3" >
         <div class="row g-0">
-          <div class="col-sm-12 col-md-3 my-2" >
-            <img src="<%=movie.data.image.medium%>">
+          <div class="col-sm-12 col-md-6 col-lg-3 my-2" >
+            <img src="<%=show.data.image.medium%>">
           </div>
-          <div class="col-sm-8 col-md-9">
+          <div class="col-sm-12 col-md-6 col-lg-9">
 
             <div class="card-body">
               <div class="row">
-                <div class="col-md-8">
-
-                  <h3 class="card-title"><%=movie.data.name%></h3>
+                <div class="col-md-12 col-lg-9">
+                  <h3 class="card-title"><%=show.data.name%></h3>
                 </div>
-                <div class="col-md-4">
-                  <form action="/movies/<%=movie.data.id%>/add" method="POST">
-                      <button class="btn btn-success  w-100 ">Adicione a sua lista!</button>
+                <div class="col-md-12 col-lg-3">
+                  <form action="/shows/<%=show.data.id%>/add" method="POST">
+                      <button class="btn btn-success  w-100 ">Adicione à sua lista!</button>
                   </form>
                 </div>
               </div>
               <small class="text-muted">Ainda não há críticas!</small>
               
-
               <%if(currentUser){%>  
-                <form action="/movies/<%=movie.data.id%>/review" method="POST">
+                <form action="/shows/<%=show.data.id%>/review" method="POST">
                   <button class= "btn btn-dark  mt-3" name="reviewButton" id="reviewButton">Deixe sua crítica!</button> 
                     <div class="my-3">
                       <div class="invisible mt-3" id="reviewBox">
@@ -50,11 +48,11 @@
                     </div>
                     
                 </form>
-                </form>
+                
                 <%}else{%> 
                   <p class="mt-2">Quer ser o primeiro a comentar?<a href="/login"> Faça seu login</a> ou <a href="/register">Registre-se</a> </p>
                   <%}%>
-                  <p class="card-text"><%-movie.data.summary%></p>
+                  <p class="card-text"><%-show.data.summary%></p>
               
             </div>
           </div>

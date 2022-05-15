@@ -12,10 +12,10 @@ const passportLocalMongoose = require("passport-local-mongoose")
     required: true,
     unique:true
   },
-  movies:[
+  shows:[
     { // filmes adicionados na lista
     type: mongoose.Schema.Types.ObjectId,
-    ref:"Movie"
+    ref:"Show"
   }
 ]
  

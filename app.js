@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const ejs = require("ejs");
 const ejsMate = require("ejs-mate");
 const path = require("path");
-const moviesRouter = require("./routes/movies")
+const showsRouter = require("./routes/shows")
 const usersRouter=  require("./routes/users")
 const reviewsRouter=  require("./routes/reviews")
 const methodOverride = require("method-override")
@@ -71,8 +71,8 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     next()
 })
-app.use("/movies", moviesRouter);
-app.use("/movies", reviewsRouter);
+app.use("/shows", showsRouter);
+app.use("/shows", reviewsRouter);
 app.use("/", usersRouter)
 
 

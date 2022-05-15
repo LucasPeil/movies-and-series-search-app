@@ -1,6 +1,8 @@
-const Movie = require( "./models/movie");
+
 const User = require("./models/user")
 const Review = require("./models/review")
+const ExpressError = require('./errors/ExpressError');
+const {userSchema, reviewSchema} = require("./schemaValidation")
 
 
 module.exports.isLoggedIn = (req,res, next)=>{
@@ -13,15 +15,34 @@ module.exports.isLoggedIn = (req,res, next)=>{
     next()
 }
 
-/*module.exports.isAuthor = async (req, res, next) => {
-    const { id } = req.params;
-    const movie = await Movie.findById(id);
-    if (!Review.author.equals(req.user._id)) {
-        req.flash('error', 'You do not have permission to do that!');
-        return res.redirect(`/campgrounds/${id}`);
+module.exports.validateReview = (req,res,next)=>{
+    const {showId} = req.params
+    const {error} = reviewSchema.validate(req.body)
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        req.flash("error", `${msg}`)
+        res.redirect(`/shows/${showId}`)
+        
+    }else{
+        next()
     }
-    next();
-}*/
+}
+
+module.exports.validateUser = (req,res,next)=>{
+    const {showId} = req.params
+    const {error} = userSchema.validate(req.body)
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        req.flash("error","Sua senha deve conter pelo menos um número, uma letra maiusculas e um caracter especial!")
+        console.log(error)
+        res.redirect("/register")
+        
+    }else{
+        next()
+    }
+}
+
+
 
 
 module.exports.isReviewAuthor = async (req, res, next) => {
@@ -29,7 +50,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     const review = await Review.findById(reviewId);
     if (!review.author.equals(req.user._id)) {
         req.flash('error', 'Você não tem permissão para fazer isso!');
-        return res.redirect(`/movies`);
+        return res.redirect(`/shows`);
     }
     next();
 }

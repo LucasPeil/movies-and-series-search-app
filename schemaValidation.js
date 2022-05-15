@@ -1,24 +1,44 @@
-const Joi = require("joi");
- //const movieSchema = Joi.object({   
-   // movie: Joi.object({   // este "movie" ta aqui porque lá nos formulario, o atributo "name" vai estar assim: name="movie[movieName]"
-     //   movieName: Joi.string().alphanum().escapeHTML().required(),
-       // rating: Joi.number().min(1).max(5).required()
-   // }).required()
-    
-// });
-// module.exports = movieSchema;
- 
- const userSchema = Joi.object({
+const BasicJoi = require("joi");
+const sanitizeHtml = require("sanitize-html")
+
+
+
+const Joi = BasicJoi.extend((joi) => ({
+  type: "string",
+  base: joi.string(),
+  messages:{
+    'string.escapeHTML': '{{#label}} não deve incluir HTML!'
+  },
+  rules:{
+    escapeHTML:{
+      validate(value,helpers){
+        const clean = sanitizeHtml(value,{
+          allowedTags:[],
+          allowedAttributes:{},
+        })
+        if(clean !== value) return helpers.error('string.escapeHTML', {value})
+        return clean
+      }
+    }
+  }
+}))
+
+module.exports.userSchema = Joi.object({
     user: Joi.object({
-        name: Joi.string().min(5).max(30).alphanum().escapeHTML().required(),
-        email:Joi.string().alphanum().escapeHTML().required()
+        username: Joi.string().required().escapeHTML(),
+        email:Joi.string().escapeHTML().required(),
+        password: Joi.string()
+        .pattern(new RegExp('^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])')).escapeHTML().required()
     }).required()
  })
- module.exports = userSchema;
  
- const reviewSchema = Joi.object({
+ 
+ module.exports.reviewSchema = Joi.object({
   review: Joi.object({
-    reviewText: Joi.string().alphanum().escapeHTML().required(),
-  rating:Joi.number().required()
+    reviewText: Joi.string().escapeHTML().required(),
+    rating:Joi.number().required().min(1)
   })
 })
+
+
+

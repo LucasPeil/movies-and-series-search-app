@@ -2,10 +2,10 @@ const express = require ("express");
 const router = express.Router();
 const review = require( "../controllers/review"); 
 
-const {isLoggedIn,isReviewAuthor} = require("../middlewares")
+const {isLoggedIn,isReviewAuthor, validateReview} = require("../middlewares")
 const catchAsync = require("../errors/AsyncErrors")
 
-router.route("/:movieId/review").post(isLoggedIn, catchAsync(review.createReview))
+router.route("/:showId/review").post(isLoggedIn, validateReview, catchAsync(review.createReview))
 
 router.route("/:id/review/:reviewId")
 .delete(isLoggedIn,isReviewAuthor, catchAsync(review.deleteReview))
