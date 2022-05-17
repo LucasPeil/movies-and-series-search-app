@@ -1,8 +1,10 @@
 
-const User = require("./models/user")
+const Show = require("./models/show")
 const Review = require("./models/review")
+
 const ExpressError = require('./errors/ExpressError');
 const {userSchema, reviewSchema} = require("./schemaValidation")
+const catchAsync = require("./errors/AsyncErrors")
 
 
 module.exports.isLoggedIn = (req,res, next)=>{
@@ -20,8 +22,24 @@ module.exports.validateReview = (req,res,next)=>{
     const {error} = reviewSchema.validate(req.body)
     if(error){
         const msg = error.details.map(el => el.message).join(',')
-        req.flash("error", `${msg}`)
+        req.flash("error", "Sua critica deve conter pelo menos 1 estrela e algum comentário ")
         res.redirect(`/shows/${showId}`)
+        
+    }else{
+        next()
+    }
+}
+
+module.exports.validateEditReview = async (req,res,next)=>{
+    const {showId,reviewId} = req.params
+    console.log(showId)
+    const show = await Show.findById(showId)
+    
+    const {error} = reviewSchema.validate(req.body)
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        req.flash("error", "Sua critica deve conter pelo menos 1 estrela e algum comentário ")
+        res.redirect(`/shows/${reviewId}/edit`)
         
     }else{
         next()
