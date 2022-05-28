@@ -26,7 +26,7 @@ module.exports.addShowList = async(req,res)=>{
       user.shows.push(showFounded);
       await user.save();
     }else{
-     //  DAR UM VALOR PADRÃO PARA ESSAS VARIAVES, CASO CONTRÁRIO O APP QUEBRA!!!!!! *********
+    
     const newShow = new Show({showName,showApiId,averageRating,summary,imageUrl}); 
     user.shows.push(newShow);
     await newShow.save();
@@ -71,7 +71,6 @@ module.exports.showDetails = async (req,res)=>{
 
   module.exports.deleteShowOnList = async(req, res)=>{
     const showId = req.params.showId;
-    const userId = req.user._id;
     const user = await User.findById(req.user._id);
     const foundShow = user.shows.find( show=>{
     return show._id == showId;

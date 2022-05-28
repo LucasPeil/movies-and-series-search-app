@@ -4,7 +4,6 @@ module.exports.renderLogin = (req, res)=>{
     res.render("../views/user/login")
 }
 module.exports.login = (req,res)=>{
-    //console.log(req.user._id)
     const goToUrl = req.session.returnTo || "/shows" ;
     delete req.session.returnTo;
     res.redirect(goToUrl);

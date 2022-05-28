@@ -5,12 +5,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
-    
-    /*background-color: rgba(0,0,0,0.5) !important;*/
-    
-    
-   
-    
+
 }
 .img-size{
   width:200px;
@@ -24,13 +19,11 @@
     display:none;
 }
 
-/* Container needed to position the button. Adjust the width as needed */
 .imgcontainer {
     position: relative;
     width: 50%;
   }
   
-  /* Make the image responsive */
   .container img {
     width: 100%;
     height: auto;
@@ -60,11 +53,10 @@
   .control li.next {
     right: 1em
   }
-  
-
- 
-
-
-/*img:hover + .button, .button:hover {
-    display: inline-block;
-}*/
+  .show-name-link{
+    border-bottom: 1px solid white;
+    transition:0.7s
+  }
+  .show-name-link:hover{
+    border-bottom: 1px solid black;
+  }

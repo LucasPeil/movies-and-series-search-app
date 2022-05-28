@@ -14,7 +14,7 @@
   }
   
   @keyframes loading {
-    /* Safari support */
+    
     from {
       transform: rotate(0turn);
     }

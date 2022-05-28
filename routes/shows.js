@@ -8,7 +8,7 @@ const catchAsync = require("../errors/AsyncErrors")
 
 router.route("/").get(show.index)
 
-router.route("/:showId/add/").post( isLoggedIn, catchAsync(show.addShowList)) // ajustar essa rota para incluir list
+router.route("/:showId/add/").post( isLoggedIn, catchAsync(show.addShowList)) 
 router.route("/list").get(isLoggedIn, catchAsync(show.renderShowList))
 
 router.route("/:id").get(show.showDetails)

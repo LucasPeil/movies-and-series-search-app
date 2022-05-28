@@ -1,7 +1,6 @@
 const express = require ("express")
 const app = express();
 const mongoose = require("mongoose");
-const ejs = require("ejs");
 const ejsMate = require("ejs-mate");
 const path = require("path");
 const showsRouter = require("./routes/shows")
@@ -13,7 +12,6 @@ const passport = require("passport")
 const LocalStrategy = require("passport-local")
 const User = require("./models/user")
 const flash = require("connect-flash");
-const helmet = require("helmet");
 const ExpressError = require("./errors/ExpressError")
 
 
@@ -47,7 +45,7 @@ const sessionConfig = {
     cookie: {
         httpOnly:true,
         expires: Date.now() + 1000 * 60 *60 * 24 * 7
-        // secure: true ----------  pesquisar depois
+        // secure: true 
     }
 }
 
