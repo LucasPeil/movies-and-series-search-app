@@ -1,0 +1,109 @@
+<% layout("./layouts/boilerplate") -%>
+    
+<div class="container">
+    <div class="row">
+          <div class="card mb-3  ">
+              <div class="row g-0">
+                  <div class="col-sm-12 col-md-6 col-lg-3 my-2"   >
+                    <img src="<%=foundShow.imageUrl%>" >
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-9">
+                      <div class="card-body " >
+                           <div class="row">
+                                <div class="col-md-12 col-lg-9">
+                                    <h3 class="card-title "><%=foundShow.showName%></h3>
+                                </div>
+                                <div class="col-md-12 col-lg-3">
+                                    <form action="/shows/<%=foundShow.showApiId%>/add" method="POST">
+                                        <button class="btn btn-success  w-100 ">Adicione à sua lista!</button>
+                                    </form>
+                                </div>
+                           </div>
+                           <!-- Calculando e mostrando a classificação média dos usuários -->
+                           <% let usersRating = 0 %>
+                                <%if(foundShow.review.length !=0){%>
+                                    <%for(let review of foundShow.review){%>
+                                        <%usersRating +=review.rating%>
+                                    <% } %>
+            
+                                    <p class="starability-result mt-2" data-rating=<%= Math.round(usersRating/foundShow.review.length) %>>
+                                        Nota dos usuários: <%= Math.round(usersRating/foundShow.review.length) %> stars
+                                    </p>
+            
+                                <%} %>            
+                        <%if(!currentUser){%>
+                            <p class="mt-2"><a href="/login"> Faça seu login</a> ou <a href="/register">Registre-se</a> para deixar uma crítica!</p>
+                          <%}else{%>                                                          
+                                <!--Checando se o usuário cadastrado já fez uma crítica ou não -->
+                                <% const doneReview = foundShow.review.some(review=>review.author.username == currentUser.username)%>                         
+                                <%if(!doneReview){%>
+                                <form action="/shows/<%=foundShow.showApiId%>/review" method="POST">
+                                    <button class= "btn btn-dark  mt-3" name="reviewButton" id="reviewButton">Deixe sua crítica!</button> 
+                                    <div class="my-3">
+                                        <div class="invisible mt-3" id="reviewBox">
+                                              <fieldset class="starability-slot">
+                                                  <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked
+                                                      aria-label="No rating." />
+                                                  <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                                  <label for="first-rate1" title="Terrible">1 star</label>
+                                                  <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                                  <label for="first-rate2" title="Not good">2 stars</label>
+                                                  <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                                  <label for="first-rate3" title="Average">3 stars</label>
+                                                  <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                                  <label for="first-rate4" title="Very good">4 stars</label>
+                                                  <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                                  <label for="first-rate5" title="Amazing">5 stars</label>
+                                              </fieldset>
+                                              <textarea class="form-control" name="review[reviewText]" id="reviewText"cols="30" rows="3"></textarea>
+                                              <button class="btn btn-success mt-2">Enviar!!!</button>
+                                       </div> 
+                                    </div>
+                                      
+                                </form>
+                                <%}%>  
+                            <%}%>
+                            <p class="card-text"><%-foundShow.summary%></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!--renderizando as reviews -->
+            <%if(foundShow.review){%>
+
+                        <%for(let review of foundShow.review){%>
+                            <div class="card mt-5">                                                              
+                                <div class="card-body">
+                                    <div class="row" >  
+                                        <div class="col-sm-6 col-md-9 col-lg-10"> 
+                                             <h4 class="card-title"><%=review.author.username%></h4>
+                                         </div>
+                                         <div class=" col-sm-6 col-md-3 col-lg-2">                           
+                                             <p class="starability-result " data-rating=<%=review.rating%>> Nota: <%=review.rating%> stars </p>
+                                         </div>    
+                                 </div> 
+                                    <div style="border: 1px solid #EEEEEE; padding: 1em;">
+                                        <p class="card-text" style="font-size: 1.5em;"><%=review.reviewText%></p>
+                                    </div>
+                                    <%if(currentUser && review.author.equals(currentUser)){ %>
+                                        <form class="d-inline-block" action="/shows/<%=foundShow._id%>/review/<%=review._id%>?_method=DELETE" method="POST">
+                                            <button class="btn btn-danger btn-sm mt-3">Delete!</button>
+                                        </form>
+                                        <a class=" btn btn-light btn-sm mt-3 text-decoration-none" href="/shows/<%=review._id%>/edit">Editar</a>
+                                    <% } %>
+
+                                </div>
+                            </div>
+                        <%}%> 
+                <%}%>
+            
+    </div>
+</div>
+
+
+ <script src="../../javascript/buttonVisibility.js"></script>
+ 
+
+
+
