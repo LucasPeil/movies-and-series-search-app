@@ -2,8 +2,6 @@
     
 <div class="container">
     <div class="row">
-           
-
           <div class="card mb-3  ">
               <div class="row g-0">
                   <div class="col-sm-12 col-md-6 col-lg-3 my-2"   >
@@ -21,10 +19,8 @@
                                     </form>
                                 </div>
                            </div>
-                        <%if(!currentUser){%>
-                            <p class="mt-2"><a href="/login"> Faça seu login</a> ou <a href="/register">Registre-se</a> para deixar uma crítica!</p>
-                          <%}else{%>
-                                <% let usersRating = 0 %>
+                           <!-- Calculando e mostrando a classificação média dos usuários -->
+                           <% let usersRating = 0 %>
                                 <%if(foundShow.review.length !=0){%>
                                     <%for(let review of foundShow.review){%>
                                         <%usersRating +=review.rating%>
@@ -34,16 +30,16 @@
                                         Nota dos usuários: <%= Math.round(usersRating/foundShow.review.length) %> stars
                                     </p>
             
-                                <%}else{%> <small>No users reviews yet</small> <%} %>                                                                
-                                
-                                <% const doneReview = foundShow.review.some(review=>review.author.username == currentUser.username)%>
-                                
-                                <%if(console.log(doneReview))%>
-                                
+                                <%} %>            
+                        <%if(!currentUser){%>
+                            <p class="mt-2"><a href="/login"> Faça seu login</a> ou <a href="/register">Registre-se</a> para deixar uma crítica!</p>
+                          <%}else{%>                                                          
+                                <!--Checando se o usuário cadastrado já fez uma crítica ou não -->
+                                <% const doneReview = foundShow.review.some(review=>review.author.username == currentUser.username)%>                         
                                 <%if(!doneReview){%>
                                 <form action="/shows/<%=foundShow.showApiId%>/review" method="POST">
                                     <button class= "btn btn-dark  mt-3" name="reviewButton" id="reviewButton">Deixe sua crítica!</button> 
-                                      <div class="my-3">
+                                    <div class="my-3">
                                         <div class="invisible mt-3" id="reviewBox">
                                               <fieldset class="starability-slot">
                                                   <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked
@@ -59,13 +55,12 @@
                                                   <input type="radio" id="first-rate5" name="review[rating]" value="5" />
                                                   <label for="first-rate5" title="Amazing">5 stars</label>
                                               </fieldset>
-                          
                                               <textarea class="form-control" name="review[reviewText]" id="reviewText"cols="30" rows="3"></textarea>
                                               <button class="btn btn-success mt-2">Enviar!!!</button>
-                                            </div> 
-                                      </div>
+                                       </div> 
+                                    </div>
                                       
-                                  </form>
+                                </form>
                                 <%}%>  
                             <%}%>
                             <p class="card-text"><%-foundShow.summary%></p>

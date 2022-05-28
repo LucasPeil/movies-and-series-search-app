@@ -13,7 +13,17 @@
             <div class="card-body">
                 <div class="row">
                     <div class=" col-md-8 col-lg-10">
-                      <h3 class="card-title"><%=show.showName%></h3>
+                      <h3 class="card-title"><a class="text-decoration-none text-dark show-name-link" href="<%=show.showApiId%>"><%=show.showName%></a></h3>
+                      <% let usersRating = 0 %>
+                      <%if(show.review.length !=0){%>
+                        <%for(let review of show.review){%>
+                            <%usersRating +=review.rating%>
+                            <% } %>
+                            <p class="starability-result mt-2" data-rating=<%= Math.round(usersRating/show.review.length) %>>
+                                Nota dos usuários: <%= Math.round(usersRating/show.review.length) %> stars
+                            </p>
+            
+                        <%} %>         
                     </div>
                     <div class=" col-md-4 col-lg-2">
                         <form action="/shows/<%=show._id%>?_method=DELETE" method="POST">
@@ -23,14 +33,7 @@
                 </div>
                 <p class="card-text"><%-show.summary%></p>
             </div>
-        </div>
-        
-            
-                
-           
-         
-            
-                       
+        </div>                     
     </div>
 </div>
     <%}%>
