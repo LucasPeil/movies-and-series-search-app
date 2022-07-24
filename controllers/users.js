@@ -4,7 +4,7 @@ module.exports.renderLogin = (req, res)=>{
     res.render("../views/user/login")
 }
 module.exports.login = (req,res)=>{
-    const goToUrl = req.session.returnTo || "/shows" ;
+    const goToUrl = req.session.returnTo || "/" ;
     delete req.session.returnTo;
     res.redirect(goToUrl);
 }
@@ -19,16 +19,16 @@ module.exports.register = async (req,res)=>{
     req.login(registeredUser, err=>{
         if (err) return next(err);
         req.flash("success", "Bem-vindo!")
-        res.redirect("/shows")
+        res.redirect("/")
     })
     } catch(e){
         req.flash("error", e.message)
-        res.redirect("/register")
+        res.redirect("/user/register")
     }
 }
 module.exports.logout = (req,res)=>{
     req.logout();
     req.flash("success", "Até logo!")
     
-    res.redirect("/shows")
+    res.redirect("/")
 }

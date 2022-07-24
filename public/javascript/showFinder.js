@@ -4,30 +4,35 @@ const form = document.querySelector("#showForm")
 const showsBox = document.querySelector("#showsBox")
 const loadingDiv = document.querySelector("#loading")
 const notFoundDiv = document.querySelector("#notFound")
+let previusSearch =""
  form.addEventListener("submit", async function (e){
- e.preventDefault()
- loadingDiv.classList.add("loading")
- const searchTerm = form.elements.shows.value
- const searchResults = await axios.get(`https://api.tvmaze.com/search/shows?q=${searchTerm}`)
- 
- makeImage(searchResults)
-
- form.elements.shows.value = ""
- form.addEventListener("change", ()=>{
-    deleteShows()
-    notFoundDiv.classList.add("invisible")
-    arrows.classList.add("invisible")
- })
+    e.preventDefault()
+    loadingDiv.classList.add("loading")
+    let searchTerm = form.elements.shows.value
+    const searchResults = await axios.get(`https://api.tvmaze.com/search/shows?q=${searchTerm}`)
+    if(previusSearch !=searchTerm ){
+      makeImage(searchResults)
+      previusSearch = searchTerm
+      form.addEventListener("change", ()=>{
+        deleteShows()
+        notFoundDiv.classList.add("invisible")
+        arrows.classList.add("invisible")
+       
+     })
+    }else{
+      loadingDiv.classList.remove("loading")
+    }  
  });
 
  
  const makeImage = function(searchResults){
-    console.dir(searchResults)
-    let everyHasNoImage = false;
+  
+    let noImage = false;
 
     if(searchResults.data.length !=0 ){
-        everyHasNoImage = searchResults.data.every( element => element.show.image == null)
-        if(everyHasNoImage == false){
+      // Se todos os filmes da API não tiverem imagem, o metodo "every" retornará true
+        noImage = searchResults.data.every( element => element.show.image == null)
+        if(noImage == false){ // se noImage é falso, então há filme com imagem para mostrar
             for(let shows of searchResults.data){
              
                 if(shows.show.image){
@@ -41,8 +46,7 @@ const notFoundDiv = document.querySelector("#notFound")
                     const linkButton = document.createElement("a")
                     linkButton.innerText = "Saiba mais"
                     linkButton.classList.add("btn","btn-dark", "btn-sm","showbtn", "invisible")
-                    linkButton.href=`/shows/${showId}`
-                
+                    linkButton.href=`/${showId}`
                     div.classList.add("imgcontainer",)
                     div.addEventListener("mouseover", ()=>{linkButton.classList.toggle("invisible")})
                     div.addEventListener("mouseout", ()=>{linkButton.classList.toggle("invisible")})

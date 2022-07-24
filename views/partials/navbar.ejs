@@ -1,20 +1,20 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/shows">Show Searcher</a>
+      <a class="navbar-brand" href="/">Show Searcher</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Navbar Collapse">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav">
-          <a class="nav-link active"  href="/shows">Home</a>
-          <% if(currentUser){%> <a class="nav-link" href="/shows/list">Minha Lista</a> <%}%>
+          <a class="nav-link active"  href="/">Home</a>
+          <% if(currentUser){%> <a class="nav-link" href="/list">Minha Lista</a> <%}%>
         </div>
         <div class="navbar-nav ms-auto">
           <% if(!currentUser){ %>
-          <a class="nav-link " href="/login">Login</a>
-          <a class="nav-link" href="/register">Registre-se</a>
+          <a class="nav-link " href="/user/login">Login</a>
+          <a class="nav-link" href="/user/register">Registre-se</a>
           <% }else{ %>
-              <a class="nav-link" href="/logout">Sair</a>
+              <a class="nav-link" href="/user/logout">Sair</a>
           <% } %>
         </div>
       </div>

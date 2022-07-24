@@ -26,7 +26,7 @@ module.exports.createReview = async (req,res)=>{
     await show.save()
     await newReview.save()
     req.flash("success", "Crítica realizada com sucesso")
-    res.redirect(`/shows/${showId}`)
+    res.redirect(`/${showId}`)
   }
 
   module.exports.deleteReview = async(req,res)=>{
@@ -36,7 +36,7 @@ module.exports.createReview = async (req,res)=>{
     await Show.findByIdAndUpdate(showId, {$pull:{review:reviewId}})
     await Review.findByIdAndDelete(reviewId)
     req.flash("error", "Crítica apagada")
-    res.redirect(`/shows/${show.showApiId}`)
+    res.redirect(`/${show.showApiId}`)
 }
 
 module.exports.renderEditReview = async(req,res)=>{
@@ -51,7 +51,7 @@ module.exports.editReview = async(req,res)=>{
     const show = await Show.findById(showId);
     await Review.findByIdAndUpdate(reviewId,{...req.body.review})
     req.flash("success", "Crítica editada!")
-    res.redirect(`/shows/${show.showApiId}`)
+    res.redirect(`/${show.showApiId}`)
   
   
   

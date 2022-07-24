@@ -34,7 +34,7 @@ module.exports.addShowList = async(req,res)=>{
     }
   
         req.flash("success","Filme adicionado na sua lista" )
-        res.redirect("/shows/list");
+        res.redirect("/list");
   }
 }
 
@@ -80,6 +80,6 @@ module.exports.showDetails = async (req,res)=>{
   user.shows.splice(index,1)
   await user.save();
   req.flash("success", "Removido da sua lista")
-  res.redirect("/shows/list");
+  res.redirect("/list");
 }
 

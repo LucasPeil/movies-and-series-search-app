@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <p class="card-text"> Mudou de ideia? Compartilhe sua nova opinião!</p>
-                <form action="/shows/<%=review.show._id%>/review/<%=review._id%>?_method=PUT" method="POST">
+                <form action="/<%=review.show._id%>/review/<%=review._id%>?_method=PUT" method="POST">
                         <div class=" mt-3" id="">
                             <fieldset class="starability-slot">
                                 <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked

@@ -14,7 +14,7 @@
                                     <h3 class="card-title "><%=foundShow.showName%></h3>
                                 </div>
                                 <div class="col-md-12 col-lg-3">
-                                    <form action="/shows/<%=foundShow.showApiId%>/add" method="POST">
+                                    <form action="/<%=foundShow.showApiId%>/add" method="POST">
                                         <button class="btn btn-success  w-100 ">Adicione à sua lista!</button>
                                     </form>
                                 </div>
@@ -32,12 +32,12 @@
             
                                 <%} %>            
                         <%if(!currentUser){%>
-                            <p class="mt-2"><a href="/login"> Faça seu login</a> ou <a href="/register">Registre-se</a> para deixar uma crítica!</p>
+                            <p class="mt-2"><a href="/user/login"> Faça seu login</a> ou <a href="/user/register">Registre-se</a> para deixar uma crítica!</p>
                           <%}else{%>                                                          
                                 <!--Checando se o usuário cadastrado já fez uma crítica ou não -->
                                 <% const doneReview = foundShow.review.some(review=>review.author.username == currentUser.username)%>                         
                                 <%if(!doneReview){%>
-                                <form action="/shows/<%=foundShow.showApiId%>/review" method="POST">
+                                <form action="/<%=foundShow.showApiId%>/review" method="POST">
                                     <button class= "btn btn-dark  mt-3" name="reviewButton" id="reviewButton">Deixe sua crítica!</button> 
                                     <div class="my-3">
                                         <div class="invisible mt-3" id="reviewBox">
@@ -87,10 +87,10 @@
                                         <p class="card-text" style="font-size: 1.5em;"><%=review.reviewText%></p>
                                     </div>
                                     <%if(currentUser && review.author.equals(currentUser)){ %>
-                                        <form class="d-inline-block" action="/shows/<%=foundShow._id%>/review/<%=review._id%>?_method=DELETE" method="POST">
+                                        <form class="d-inline-block" action="/<%=foundShow._id%>/review/<%=review._id%>?_method=DELETE" method="POST">
                                             <button class="btn btn-danger btn-sm mt-3">Delete!</button>
                                         </form>
-                                        <a class=" btn btn-light btn-sm mt-3 text-decoration-none" href="/shows/<%=review._id%>/edit">Editar</a>
+                                        <a class=" btn btn-light btn-sm mt-3 text-decoration-none" href="/<%=review._id%>/edit">Editar</a>
                                     <% } %>
 
                                 </div>

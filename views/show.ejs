@@ -15,7 +15,7 @@
                   <h3 class="card-title"><%=show.data.name%></h3>
                 </div>
                 <div class="col-md-12 col-lg-3">
-                  <form action="/shows/<%=show.data.id%>/add" method="POST">
+                  <form action="/<%=show.data.id%>/add" method="POST">
                       <button class="btn btn-success  w-100 ">Adicione à sua lista!</button>
                   </form>
                 </div>
@@ -23,7 +23,7 @@
               <small class="text-muted">Ainda não há críticas!</small>
               
               <%if(currentUser){%>  
-                <form action="/shows/<%=show.data.id%>/review" method="POST">
+                <form action="/<%=show.data.id%>/review" method="POST">
                   <button class= "btn btn-dark  mt-3" name="reviewButton" id="reviewButton">Deixe sua crítica!</button> 
                     <div class="my-3">
                       <div class="invisible mt-3" id="reviewBox">
@@ -50,7 +50,7 @@
                 </form>
                 
                 <%}else{%> 
-                  <p class="mt-2">Quer ser o primeiro a comentar?<a href="/login"> Faça seu login</a> ou <a href="/register">Registre-se</a> </p>
+                  <p class="mt-2">Quer ser o primeiro a comentar?<a href="/user/login"> Faça seu login</a> ou <a href="/user/register">Registre-se</a> </p>
                   <%}%>
                   <p class="card-text"><%-show.data.summary%></p>
               

@@ -7,7 +7,7 @@ module.exports.isLoggedIn = (req,res, next)=>{
         const id = req.params.id
         req.session.returnTo = req.originalUrl.replace("add", "")
         req.flash("error", "Voce precisa estar logado para completar esta ação!")
-        return res.redirect("/login")
+        return res.redirect("/user/login")
     }
     next()
 }
@@ -18,7 +18,7 @@ module.exports.validateReview = (req,res,next)=>{
     if(error){
         const msg = error.details.map(el => el.message).join(',')
         req.flash("error", "Sua critica deve conter pelo menos 1 estrela e algum comentário ")
-        res.redirect(`/shows/${showId}`)
+        res.redirect(`/${showId}`)
         
     }else{
         next()
@@ -32,7 +32,7 @@ module.exports.validateEditReview = async (req,res,next)=>{
     if(error){
         const msg = error.details.map(el => el.message).join(',')
         req.flash("error", "Sua critica deve conter pelo menos 1 estrela e algum comentário ")
-        res.redirect(`/shows/${reviewId}/edit`)
+        res.redirect(`/${reviewId}/edit`)
         
     }else{
         next()
@@ -45,7 +45,7 @@ module.exports.validateUser = (req,res,next)=>{
     if(error){
         req.flash("error","Sua senha deve conter pelo menos um número, uma letra maiusculas e um caracter especial!")
         console.log(error)
-        res.redirect("/register")
+        res.redirect("/user/register")
         
     }else{
         next()
@@ -60,7 +60,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     const review = await Review.findById(reviewId);
     if (!review.author.equals(req.user._id)) {
         req.flash('error', 'Você não tem permissão para fazer isso!');
-        return res.redirect(`/shows`);
+        return res.redirect(`/`);
     }
     next();
 }
