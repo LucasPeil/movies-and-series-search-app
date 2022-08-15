@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production"){
+    require("dotenv").config()
+}
 const express = require ("express")
 const app = express();
 const mongoose = require("mongoose");
@@ -13,11 +16,13 @@ const LocalStrategy = require("passport-local")
 const User = require("./models/user")
 const flash = require("connect-flash");
 const ExpressError = require("./errors/ExpressError")
-
-
+const dbUrl = process.env.DB_URL
+const secret = process.env.SECRET || 'thisisarandomsecret!';
+const MongoDBStore =  require ("connect-mongo")
+// 'mongodb://localhost:27017/showsApp'
 const connectMongoose = async()=>{
     try{
-        await mongoose.connect('mongodb://localhost:27017/showsApp');
+        await mongoose.connect(dbUrl);
         console.log("Conectado!");
     } catch(e){
         console.log(e);
@@ -38,8 +43,20 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
+const store = MongoDBStore.create({
+    mongoUrl: dbUrl,
+    secret,
+    touchAfter: 24 * 60 * 60
+});
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+})
+
 const sessionConfig = {
-    secret:"password",
+    store,
+    name:"session",
+    secret,
     resave:false,
     saveUninitialized:true,
     cookie: {
@@ -69,6 +86,8 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     next()
 })
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 app.use("/", showsRouter);
 app.use("/", reviewsRouter);
 app.use("/user/", usersRouter)
@@ -85,8 +104,8 @@ app.use((err,req,res,next)=>{
     if(!err.message) err.message = "Ops... Algo deu errado!"
     res.status(statusCode).render("error", {err})
 })
-
-app.listen(3000, ()=>{
-    console.log("Listening on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, ()=>{
+    console.log(`Listening on port ${port}`);
 });
 
